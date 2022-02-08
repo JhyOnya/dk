@@ -157,8 +157,8 @@ if __name__ == "__main__":
     msg = sys.argv[3]
 
     data = []
-    for pre in msg.split(msg,";"):
-        data.append(pre)
+    for pre in msg.split(";"):
+        data.append(pre.split(","))
         print(pre)
     print(data)
     time.sleep(random.randint(0, 15))
