@@ -31,4 +31,4 @@ jobs:
         run: python -m pip install --upgrade requests lxml bs4 PyEmail pytz
         
       - name: 'run daka'
-        run: python ./daka_unloop_public.py $FROMMAIL $MAILPASS $MSG
+        run: python ./daka_unloop_public.py ${{ secrets.FROMMAIL }}  ${{ secrets.MAILPASS }}  ${{ secrets.MSG }}
