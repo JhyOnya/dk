@@ -150,7 +150,6 @@ if __name__ == "__main__":
     print()
     print("完成情况", "https://ehall.jlu.edu.cn/taskcenter/wechat/done")
     print("\n---------------------------------------------------\n")
-    print(sys.argv)
 
     fromMail = sys.argv[1]  # 发送消息的邮箱（登录邮箱）
     mailPass = sys.argv[2]  # 登录邮箱的登录密码
@@ -159,11 +158,8 @@ if __name__ == "__main__":
     data = []
     for pre in msg.split("^^^"):
         data.append(pre.split(","))
-        print(pre)
-    print(data)
+        
     time.sleep(random.randint(0, 15))
-
-    exit(0)
 
     pre_time, pre_hour = get_time(need_hour=True)
     msg_fl = "msg_jian.csv"
@@ -180,7 +176,6 @@ if __name__ == "__main__":
         mail = pre_msg[3]
         need_night = pre_msg[4]
         print("\n\n")
-        print(pre_msg)
         sign_time = "晚签到"
         if need_night == '0' and sign_time == "晚签到":
             print("无需晚签到")
