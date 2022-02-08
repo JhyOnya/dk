@@ -157,7 +157,7 @@ if __name__ == "__main__":
     msg = sys.argv[3]
 
     data = []
-    for pre in msg.split("$$$"):
+    for pre in msg.split("^^^"):
         data.append(pre.split(","))
         print(pre)
     print(data)
