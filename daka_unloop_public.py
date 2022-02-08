@@ -153,14 +153,14 @@ if __name__ == "__main__":
     print(sys.argv)
 
     fromMail = sys.argv[1]  # 发送消息的邮箱（登录邮箱）
-    mailPass = (sys.argv[2])  # 登录邮箱的登录密码
-
-    print(fromMail)
+    mailPass = sys.argv[2]  # 登录邮箱的登录密码
+    msg = sys.argv[3]
 
     data = []
-    for i in range(len(sys.argv) - 1):
-        data.append(sys.argv[i + 1])
-        print(data)
+    for pre in msg.split(msg,";"):
+        data.append(pre)
+        print(pre)
+    print(data)
     time.sleep(random.randint(0, 15))
 
     exit(0)
