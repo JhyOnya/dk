@@ -92,23 +92,23 @@ def check(username, password, grade):
             soup = BeautifulSoup(login_html.text, 'lxml')
             pid = soup.find(name="input", attrs={"name": "pid"}).get('value')
 
-            # 登录
+            # login
             data = {'username': username, 'password': password, 'pid': pid, 'source': ''}
             s.post(url=login_url, data=data, headers=headers)
 
-            # 获取csrf_token
+            # get csrf_token
             form_html = s.get(url=get_formurl_by_grade(grade), headers=headers)
             soup = BeautifulSoup(form_html.text, 'lxml')
             csrf_token = soup.find(name="meta", attrs={"itemscope": "csrfToken"}).get('content')
 
-            # 获取打卡地址
+            # get addr
             headers = {'User-Agent': UA, 'Referer': get_formurl_by_grade(grade)}
             data = {'idc': grade.upper() + 'MRDK', 'csrfToken': csrf_token}
             start_json = s.post(url=start_url, data=data, headers=headers)
             step_id = re.search('(?<=form/)\\d*(?=/render)', start_json.text)[0]
             csrf_token = soup.find(name="meta", attrs={"itemscope": "csrfToken"}).get('content')
 
-            # 获取打卡基础信息
+            # get msg
             data = {'stepId': step_id, 'csrfToken': csrf_token}
             render = s.post(url=render_url, data=data, headers=headers)
             render_info = json.loads(render.content)['entities'][0]['data']
@@ -116,7 +116,7 @@ def check(username, password, grade):
             if grade == "BKS":
                 render_info["fieldDJXXyc"] = "1"
 
-            # 打卡
+            # dk
             data = {
                 'actionId': 1,
                 'formData': json.dumps(render_info),
@@ -151,8 +151,8 @@ if __name__ == "__main__":
     print("完成情况", "https://ehall.jlu.edu.cn/taskcenter/wechat/done")
     print("\n---------------------------------------------------\n")
 
-    fromMail = sys.argv[1]  # 发送消息的邮箱（登录邮箱）
-    mailPass = sys.argv[2]  # 登录邮箱的登录密码
+    fromMail = sys.argv[1]  
+    mailPass = sys.argv[2] 
     msg = sys.argv[3]
 
     data = []
@@ -176,7 +176,7 @@ if __name__ == "__main__":
         mail = pre_msg[3]
         need_night = pre_msg[4]
         print("\n\n")
-        sign_time = "晚签到"
+        
         if need_night == '0' and sign_time == "晚签到":
             print("无需晚签到")
             continue
