@@ -8,8 +8,8 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: '0 12 * * *'  # utc+8 20:00 这里
-    - cron: '0 22 * * *'  # utc+8 6:00 这里
+    - cron: '59 11 * * *'  # utc+8 19:59 这里
+    - cron: '59 21 * * *'  # utc+8 05:59 这里
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
