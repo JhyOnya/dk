@@ -159,7 +159,7 @@ if __name__ == "__main__":
     for pre in msg.split("^^^"):
         data.append(pre.split(","))
         
-    time.sleep(random.randint(0, 15))
+    time.sleep(2*60)
 
     pre_time, pre_hour = get_time(need_hour=True)
     msg_fl = "msg_jian.csv"
