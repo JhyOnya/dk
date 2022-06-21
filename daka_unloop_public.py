@@ -203,4 +203,3 @@ if __name__ == "__main__":
                 fresh_time += 1
             print("\n---------------------------------------------------\n")
             time.sleep(random.randint(30, 100))
-    send_message(mail, sign_time + "全部打卡成功")
