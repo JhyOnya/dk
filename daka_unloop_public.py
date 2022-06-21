@@ -93,7 +93,7 @@ def check(username, password, grade):
             pid = soup.find(name="input", attrs={"name": "pid"}).get('value')
 
             # login
-            data = {'username': username, 'password': password, 'pid': pid, 'source': ''}
+            data = {'pre_msg[0]': username, 'password': password, 'pid': pid, 'source': ''}
             s.post(url=login_url, data=data, headers=headers)
 
             # get csrf_token
@@ -126,7 +126,7 @@ def check(username, password, grade):
                 'csrfToken': csrf_token,
                 'lang': 'zh'
             }
-            print("  ", data)
+            print(get_time(),username, "sending")
 
             headers["Connection"] = "close"
             res = s.post(url=action_url, data=data, headers=headers)
@@ -166,8 +166,12 @@ if __name__ == "__main__":
     print("当前时间", pre_time, pre_hour)
     if pre_hour > 5 and pre_hour < 12:
         sign_time = "早签到"
-    elif pre_hour > 18 and pre_hour < 24:
+    elif pre_hour > 17 and pre_hour < 24:
         sign_time = "晚签到"
+        
+    print(len(data))
+    for pre_msg in data:
+        print(get_time(), pre_msg[0])
 
     for pre_msg in data:
         usname = pre_msg[0]
