@@ -43,7 +43,7 @@ def send_message(addr, context):
     print(get_time(), "发送邮件", context, flush=True)
     smtp_server = 'smtp.163.com'  # smt.qq.com
 
-    msg_mail = MIMEText(context + "\n" + get_time() + "\n不定期好使，能不能看到随缘QAQ\n\n    Sent by Onya")
+    msg_mail = MIMEText(context + "\n" + get_time() + "\n\n\n    Sent by Onya")
     msg_mail['Subject'] = context
     msg_mail['From'] = fromMail
     msg_mail['To'] = "%s;%s" % (fromMail, addr)  # 接收消息的邮箱
@@ -203,3 +203,4 @@ if __name__ == "__main__":
                 fresh_time += 1
             print("\n---------------------------------------------------\n")
             time.sleep(random.randint(30, 100))
+    send_message(mail, sign_time + "全部打卡成功")
