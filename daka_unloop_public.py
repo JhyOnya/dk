@@ -163,13 +163,13 @@ if __name__ == "__main__":
 
     pre_time, pre_hour = get_time(need_hour=True)
     msg_fl = "msg_jian.csv"
-    print("当前时间", pre_time, pre_hour)
+    print("当前时间", pre_time)
     if pre_hour > 5 and pre_hour < 12:
         sign_time = "早签到"
     elif pre_hour > 17 and pre_hour < 24:
         sign_time = "晚签到"
         
-    print(get_time(),len(data))
+    print(get_time(),"人数", len(data))
     for pre_msg in data:
         print(get_time(), pre_msg[0])
 
