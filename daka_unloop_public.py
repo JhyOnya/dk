@@ -95,7 +95,6 @@ def check(username, password, grade):
             # login
             data = {'username': username, 'password': password, 'pid': pid, 'source': ''}
             s.post(url=login_url, data=data, headers=headers)
-            time.sleep(3)
 
             # get csrf_token
             form_html = s.get(url=get_formurl_by_grade(grade), headers=headers)
