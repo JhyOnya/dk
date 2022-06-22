@@ -32,7 +32,7 @@ def get_time(need_hour=False):
 requests.packages.urllib3.disable_warnings()
 
 # not_test = False  # 测试=False 正式=True
-not_test = True  # 测试=False 正式=True
+not_test = False  # 测试=False 正式=True
 
 
 def send_message(addr, context):
@@ -93,8 +93,9 @@ def check(username, password, grade):
             pid = soup.find(name="input", attrs={"name": "pid"}).get('value')
 
             # login
-            data = {'pre_msg[0]': username, 'password': password, 'pid': pid, 'source': ''}
+            data = {'username': username, 'password': password, 'pid': pid, 'source': ''}
             s.post(url=login_url, data=data, headers=headers)
+            time.sleep(3)
 
             # get csrf_token
             form_html = s.get(url=get_formurl_by_grade(grade), headers=headers)
@@ -126,7 +127,7 @@ def check(username, password, grade):
                 'csrfToken': csrf_token,
                 'lang': 'zh'
             }
-            print(get_time(),username, "sending")
+            print(get_time(), "%15s" % username, "签到中")
 
             headers["Connection"] = "close"
             res = s.post(url=action_url, data=data, headers=headers)
@@ -142,6 +143,7 @@ def check(username, password, grade):
 
         except Exception as e:
             print(get_time(), e)
+            print(get_time(), str(traceback.format_exc()))
             print(get_time(), "Retrying...")
             time.sleep(5)
 
@@ -151,59 +153,58 @@ if __name__ == "__main__":
     print("完成情况", "https://ehall.jlu.edu.cn/taskcenter/wechat/done")
     print("\n---------------------------------------------------\n")
 
-    fromMail = sys.argv[1]  
-    mailPass = sys.argv[2] 
+    fromMail = sys.argv[1]
+    mailPass = sys.argv[2]
     msg = sys.argv[3]
 
-    data = []
-    for pre in msg.split("^^^"):
-        data.append(pre.split(","))
-        
-    time.sleep(2*60)
+data = []
+for pre in msg.split("^^^"):
+    data.append(pre.split(","))
 
-    pre_time, pre_hour = get_time(need_hour=True)
-    msg_fl = "msg_jian.csv"
-    print("当前时间", pre_time)
-    if pre_hour > 5 and pre_hour < 12:
-        sign_time = "早签到"
-    elif pre_hour > 17 and pre_hour < 24:
-        sign_time = "晚签到"
-        
-    print(get_time(),"人数", len(data))
-    for pre_msg in data:
-        print(get_time(), pre_msg[0])
+pre_time, pre_hour = get_time(need_hour=True)
+msg_fl = "msg_jian.csv"
+print("当前时间", pre_time)
+if pre_hour > 5 and pre_hour < 12:
+    sign_time = "早签到"
+elif pre_hour > 17 and pre_hour < 24:
+    sign_time = "晚签到"
 
-    for pre_msg in data:
-        usname = pre_msg[0]
-        passwd = pre_msg[1]
-        type = pre_msg[2]
-        mail = pre_msg[3]
-        need_night = pre_msg[4]
-        print("\n\n")
-        
-        if need_night == '0' and sign_time == "晚签到":
-            print("无需晚签到")
-            continue
+print(get_time(), "人数", len(data))
+for i, pre_msg in enumerate(data):
+    print(get_time(), " %2s" % (i + 1), pre_msg[0])
+print("\n")
 
-        while True:
+for pre_msg in data:
+    usname = pre_msg[0]
+    passwd = pre_msg[1]
+    type = pre_msg[2]
+    mail = pre_msg[3]
+    need_night = pre_msg[4]
 
-            print(get_time(), sign_time)
+    if need_night == '0' and sign_time == "晚签到":
+        print(get_time(), "%15s" % usname, "无需晚签到\n")
+        continue
 
-            try:
+    while True:
 
-                check(usname, passwd, type)
-                print(get_time(), usname, "签到完毕")
+        print(get_time(), "%15s" % usname, sign_time)
 
-                fresh_time = 1
-                fresh_time_equal = 1
+        try:
 
-                send_message(mail, sign_time + "  成功")
+            check(usname, passwd, type)
+            print(get_time(), "%15s" % usname, "签到完毕")
 
-                break
+            fresh_time = 1
+            fresh_time_equal = 1
 
-            except Exception:
-                print("\n  error", end=' - ', flush=True)
-                print(str(traceback.format_exc()).replace("\n", "        "))
-                fresh_time += 1
-            print("\n---------------------------------------------------\n")
-            time.sleep(random.randint(30, 100))
+            send_message(mail, sign_time + "  成功")
+
+            break
+
+        except Exception:
+            print("\n  error", end=' - ', flush=True)
+            print(str(traceback.format_exc()).replace("\n", "        "))
+            fresh_time += 1
+        print("\n---------------------------------------------------\n")
+        time.sleep(random.randint(30, 100))
+    print("\n")
