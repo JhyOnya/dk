@@ -32,7 +32,7 @@ def get_time(need_hour=False):
 requests.packages.urllib3.disable_warnings()
 
 # not_test = False  # 测试=False 正式=True
-not_test = False  # 测试=False 正式=True
+not_test = True  # 测试=False 正式=True
 
 
 def send_message(addr, context):
@@ -161,7 +161,7 @@ for pre in msg.split("^^^"):
     data.append(pre.split(","))
 
 pre_time, pre_hour = get_time(need_hour=True)
-msg_fl = "msg_jian.csv"
+
 print("当前时间", pre_time)
 if pre_hour > 5 and pre_hour < 12:
     sign_time = "早签到"
