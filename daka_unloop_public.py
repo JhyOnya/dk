@@ -169,7 +169,7 @@ if __name__ == "__main__":
     elif pre_hour > 17 and pre_hour < 24:
         sign_time = "晚签到"
         
-    print(len(data))
+    print(get_time(),len(data))
     for pre_msg in data:
         print(get_time(), pre_msg[0])
 
