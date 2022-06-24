@@ -163,9 +163,9 @@ for pre in msg.split("^^^"):
 pre_time, pre_hour = get_time(need_hour=True)
 
 print("当前时间", pre_time)
-if pre_hour > 5 and pre_hour < 12:
+if pre_hour > 4 and pre_hour < 12:
     sign_time = "早签到"
-elif pre_hour > 17 and pre_hour < 24:
+elif pre_hour > 16 and pre_hour < 24:
     sign_time = "晚签到"
 
 print(get_time(), "人数", len(data))
